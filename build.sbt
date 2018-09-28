@@ -139,6 +139,10 @@ lazy val loadTestImpl = project("load-test-impl")
 def project(id: String) = Project(id, base = file(id))
   .settings(javacOptions in compile ++= Seq("-encoding", "UTF-8", "-source", "1.8", "-target", "1.8", "-Xlint:unchecked", "-Xlint:deprecation"))
   .settings(jacksonParameterNamesJavacSettings: _*) // applying it to every project even if not strictly needed.
+  .settings(dependencyOverrides += "commons-codec" % "commons-codec" % "1.11")
+  .settings(dependencyOverrides += "com.typesafe.akka" %% "akka-http-core" % "10.0.14")       // CVE-2018-16131
+  .settings(dependencyOverrides += "com.google.guava" % "guava" % "24.1.1-jre")               // CVE-2018-10237
+  .settings(dependencyOverrides += "org.apache.commons" % "commons-compress" % "1.18")        // CVE-2018-11771
 
 // See https://github.com/FasterXML/jackson-module-parameter-names
 lazy val jacksonParameterNamesJavacSettings = Seq(
